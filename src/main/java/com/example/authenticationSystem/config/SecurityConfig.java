@@ -3,6 +3,7 @@ package com.example.authenticationSystem.config;
 import com.example.authenticationSystem.Service.AppUserDetailsService;
 import com.example.authenticationSystem.filter.JwtRequestFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -37,9 +38,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtRequestFilter jwtRequestFilter) throws Exception {
         http
-                .cors(Customizer.withDefaults()) // Now uses the @Bean below
+                .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // <--- KEY!
                         .requestMatchers("/login","/register","/send-reset-otp","/reset-password","/logout")
                         .permitAll()
                         .anyRequest().authenticated()
