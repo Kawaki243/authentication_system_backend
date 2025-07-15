@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copy the jar file from your local machine to the container
 # Replace 'target/app.jar' with your actual jar file path
-COPY target/*.jar app.jar
+COPY target/authenticationSystem.jar app.jar
 
 # Expose the port your app runs on (update if needed)
 EXPOSE 8080
